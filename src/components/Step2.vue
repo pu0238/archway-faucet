@@ -20,16 +20,22 @@
 import { computed, reactive } from "vue";
 import Button from "./Button.vue";
 import { useStore } from "@nanostores/vue";
-import { isWallet, sharedConnect } from "../utils/wallet";
+import { isWallet } from "../utils/wallet";
 import { isWalletConnected } from "../state/walletState";
 import { CONSTANTINE_INFO } from "../utils/constant";
+import { ArchwayClient } from "@archwayhq/arch3.js/build";
 
 export default {
   components: { Button },
+  data() {
+    return {
+      uconstBalance: "0",
+    };
+  },
   methods: {
     async getTokensFromFaucet() {
       if (!this.isWalletConnected) {
-        return console.log("To get tokens you need to connect your wallet");
+        return alert("To get tokens you need to connect your wallet");
       }
 
       const offlineSigner = window.keplr?.getOfflineSigner(
@@ -58,10 +64,24 @@ export default {
         mode: "no-cors",
       })
         .then((response) => response.json())
-        .then(() => console.log("Succesfully got tokens from faucet"))
-        .catch((error) => console.log("error", error.message));
+        .then(async () => {
+          console.log("Succesfully got tokens from faucet");
+          const tokent = await this.getCurrentBalance(accounts[0].address);
+          alert(`You currently have ${tokent} UCONST`);
+        })
+        .catch((error) => {
+          console.log("error", error.message);
+          alert(
+            `You can get maximum 30 CONST tokens from that faucet. \nTry to use faucet on archway discord (https://discord.gg/archwayhq)`
+          );
+        });
+    },
+    async getCurrentBalance(address: string) {
+      const client = await ArchwayClient.connect(CONSTANTINE_INFO.rpc);
+      return (await client.getBalance(address, "uconst")).amount;
     },
   },
+  mounted() {},
   setup(props) {
     isWallet();
     const $collectionDescription = useStore(isWalletConnected);

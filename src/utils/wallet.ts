@@ -1,9 +1,6 @@
 import type {
   Window as KeplrWindow,
-  OfflineAminoSigner,
-  OfflineDirectSigner,
 } from "@keplr-wallet/types";
-import { useStore } from "@nanostores/vue";
 import { isWalletConnected } from "../state/walletState";
 import { CONSTANTINE_INFO } from "./constant";
 import { errorMessage, isErrorPopout } from "../state/error";
