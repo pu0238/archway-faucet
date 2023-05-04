@@ -56,25 +56,25 @@ export default {
         coins: ["5000000uconst"],
       });
 
-      fetch("https://faucet.constantine-2.archway.tech/", {
+      
+      const res = await fetch("https://faucet.constantine-2.archway.tech/", {
         method: "POST",
         headers: myHeaders,
         body: raw,
         redirect: "follow",
         mode: "no-cors",
-      })
-        .then((response) => response.json())
-        .then(async () => {
-          console.log("Succesfully got tokens from faucet");
-          const tokent = await this.getCurrentBalance(accounts[0].address);
-          alert(`You currently have ${tokent} UCONST`);
-        })
-        .catch((error) => {
-          console.log("error", error.message);
-          alert(
-            `You can get maximum 30 CONST tokens from that faucet. \nTry to use faucet on archway discord (https://discord.gg/archwayhq)`
-          );
-        });
+      });
+      console.log(res, res.status )
+      /*
+      if (res.ok) {
+        console.log("Succesfully got tokens from faucet");
+        const tokent = await this.getCurrentBalance(accounts[0].address);
+        alert(`You currently have ${tokent} UCONST`);
+      } else {
+        alert(
+          `You can get maximum 30 CONST tokens from that faucet. \nTry to use faucet on archway discord (https://discord.gg/archwayhq)`
+        );
+      }*/
     },
     async getCurrentBalance(address: string) {
       const client = await ArchwayClient.connect(CONSTANTINE_INFO.rpc);
