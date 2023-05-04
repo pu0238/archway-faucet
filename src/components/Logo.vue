@@ -9,7 +9,7 @@
     >
       <img
         draggable="false"
-        src="/evolvnft-logo.svg"
+        src="/archway-faucet/evolvnft-logo.svg"
         alt="EvolvNFT logo"
         class="h-8"
       /></div
