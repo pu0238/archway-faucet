@@ -1,0 +1,17 @@
+---
+import Main from "../layouts/Main.astro";
+import Footer from "../components/Footer.vue";
+---
+
+<Main
+  title="EvolvNFT - faucet"
+  lang="pl"
+  description="Evolvnft is a decentralized token ranch and a place to create editable, levelable and evolving metadata for your decentralized assets!"
+>
+  <div class="container mx-auto min-h-screen">
+    <div class="px-8 mx-auto lg:mb-16">
+      <slot />
+    </div>
+  </div>
+  <Footer class="w-full float-left" />
+</Main>
