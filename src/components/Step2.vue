@@ -3,7 +3,10 @@
     <h2 class="font-cal text-lg">
       To get tokens CONST🪙 tokens from faucet🚰 click on the button below
     </h2>
-    <p class="font-josefin">Click to get cokens from faucet</p>
+    <p class="font-josefin">
+      Click to get cokens from faucet (this faucet allows you to receive 30
+      CONST per address)
+    </p>
     <Button
       :isDisabled="false"
       :isFilled="true"
@@ -51,30 +54,20 @@ export default {
       myHeaders.append("accept", "application/json");
       myHeaders.append("Content-Type", "application/json");
 
+      const uconst = "5000000";
       const raw = JSON.stringify({
         address: accounts[0].address,
-        coins: ["5000000uconst"],
+        coins: [`${uconst}uconst`],
       });
 
-      
-      const res = await fetch("https://faucet.constantine-2.archway.tech/", {
+      await fetch("https://faucet.constantine-2.archway.tech/", {
         method: "POST",
         headers: myHeaders,
         body: raw,
-        redirect: "follow",
         mode: "no-cors",
       });
-      console.log(res, res.status )
-      /*
-      if (res.ok) {
-        console.log("Succesfully got tokens from faucet");
-        const tokent = await this.getCurrentBalance(accounts[0].address);
-        alert(`You currently have ${tokent} UCONST`);
-      } else {
-        alert(
-          `You can get maximum 30 CONST tokens from that faucet. \nTry to use faucet on archway discord (https://discord.gg/archwayhq)`
-        );
-      }*/
+      const tokens = await this.getCurrentBalance(accounts[0].address);
+      alert(`You got ${tokens} uconst tokens from faucet`);
     },
     async getCurrentBalance(address: string) {
       const client = await ArchwayClient.connect(CONSTANTINE_INFO.rpc);
